@@ -42,7 +42,7 @@ func (c *FeiQNotifyCommand) OnRequest(event base.IEvent) {
 		ip := clientMessage.SshClientIp
 		now := time.Now().UnixMilli()
 		if client, ok := c.sshClients[ip]; ok {
-			if now-client.LastTime > 1000*600 {
+			if now-client.LastTime > 1000*3600 {
 				mess := mess2.NewFeiQMessage("使用服务器期间，请谨慎操作，长时间未使用请及时断开", clientMessage.Ip, now)
 				evt := event2.NewSendEvent()
 				evt.SetToIp(ip)
