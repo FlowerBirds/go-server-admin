@@ -1,12 +1,12 @@
 .PHONY: build
 
-VERSION=0.0.3
+VERSION=0.0.9
 BINARY=server-admin
 PATH:=D:\06_devptools\go1.17.12.windows-amd64\go\bin:$(PATH)
 GO111MODULE=on
 
 # $(info $(PATH))
-build_cmd = GOOS=$(1) GOARCH=$(2) CGO_ENABLED=1 CGO_LDFLAGS="-static" go build -o build/${BINARY}-${VERSION}/$(BINARY)$(3)
+build_cmd = GOOS=$(1) GOARCH=$(2) CGO_ENABLED=1 CGO_LDFLAGS="-static" go build -ldflags "-X main.version=${VERSION}" -o build/${BINARY}-${VERSION}/$(BINARY)$(3)
 tar = cd build && tar -cvzf ${BINARY}-$(1)_$(2)-${VERSION}.tar.gz ${BINARY}-${VERSION} && rm -rf ${BINARY}-${VERSION} && cd ..
 cp_static = cp -r static build/${BINARY}-${VERSION}/ && cp -r README.md build/${BINARY}-${VERSION}/
 cp_linux = cd linux && cp * ../build/${BINARY}-${VERSION}/
