@@ -42,7 +42,7 @@ func (server *UdpServer) initCommand() {
 
 func (server *UdpServer) Start() {
 	ip := util.GetIp()
-	log.Printf("Try to start at %s:%d\n", ip, server.Port)
+	log.Printf("Try to start at %s:%d with version %s\n", ip, server.Port, server.config.Version)
 	listen, err := net.ListenUDP("udp", &net.UDPAddr{
 		IP:   net.ParseIP("0.0.0.0"),
 		Port: server.Port,

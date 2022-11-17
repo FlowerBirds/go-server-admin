@@ -22,6 +22,7 @@ type UdpConfig struct {
 	DataDir  string
 	HttpPort int
 	WorkDir  string
+	Version  string
 }
 
 func (config *UdpConfig) UpdateServer(ip string) {
