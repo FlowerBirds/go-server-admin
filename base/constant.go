@@ -1,0 +1,16 @@
+package base
+
+// 打印消息类型
+const ECHO_COMMAND = 1
+
+const GET_SERVER_COMMAND = 2
+
+const INTERNAL_COMMAND = 100
+
+const RECEIVE_CLIENT_COMMAND = 3
+
+const DATABASE_CRUD_COMMAND = 101
+
+const EDGE_MONITOR_COMMAND = 4
+
+const FEIQ_NOTIFY_COMMAND = 102

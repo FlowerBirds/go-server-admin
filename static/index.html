@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Server Admin Portal</title>
+    <link type="text/css" rel="stylesheet" href="css/portal.css" />
+    <link rel="stylesheet" href="css/theme-chalk-index.css" />
+    <script src="js/jquery-3.6.0.min.js" ></script>
+    <script src="js/vue.js" ></script>
+    <script src="js/axios.min.js" ></script>
+    <script src="js/element-ui.js" ></script>
+    <script src="js/httpVueLoader.js" ></script>
+</head>
+<body>
+<div id="app">
+    <el-container>
+        <!--<el-header>
+            <header-bar></header-bar>
+        </el-header>
+        <el-main>
+            <message-table></message-table>
+        </el-main>-->
+        <el-main>
+        <el-tabs v-model="activeName" type="card" @tab-click="handleClick">
+            <el-tab-pane label="操作日志" name="first">
+                <message-table></message-table>
+            </el-tab-pane>
+            <el-tab-pane label="服务器列表" name="second">
+                <servers-table></servers-table>
+            </el-tab-pane>
+        </el-tabs>
+        </el-main>
+    </el-container>
+
+</div>
+<script type="text/javascript">
+    new Vue({
+        el: '#app',
+        data() {
+            return {
+                clientMessage: [],
+                activeName: 'first'
+            }
+        },
+        components: {
+            'message-table': httpVueLoader('./component/MessageTable.vue', 'message-table'),
+            'servers-table': httpVueLoader('./component/ServersTable.vue', 'servers-table'),
+            'header-bar': httpVueLoader('./component/HeaderBar.vue', 'header-bar')
+        },
+        mounted() {
+
+        },
+        methods: {
+            handleClick: function () {
+
+            }
+        }
+    })
+</script>
+</body>
+</html>
