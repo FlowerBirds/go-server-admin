@@ -24,6 +24,7 @@ var (
 	configFile = ""
 	devMode    = false
 	workDir    = "."
+	version    = "0.0.1"
 )
 
 func initCommandLine() {
@@ -114,6 +115,7 @@ func main() {
 		DataDir:  dataDir,
 		HttpPort: httpPort,
 		WorkDir:  workDir,
+		Version:  version,
 	}
 	server := service.NewUdpServer(serverConfig)
 	server.Start()
