@@ -68,7 +68,7 @@ func initConfigFile() {
 	}
 	if !devMode {
 		confDataDir := viper.Get("data.dir")
-		log.Println("read data.dir from config file: " + viper.Get("data.dir").(string))
+		log.Println("read data.dir from config file: " + confDataDir.(string))
 		dataDir = confDataDir.(string)
 	}
 	server := viper.Get("udp.server")
