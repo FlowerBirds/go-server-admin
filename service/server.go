@@ -118,7 +118,9 @@ func (server *UdpServer) initService() {
 func (server *UdpServer) initHttp() {
 	if server.config.IsServer {
 		r := mux.NewRouter()
-		fs := http.FileServer(http.Dir("./static/"))
+		staticDir := http.Dir(server.config.WorkDir + "/static/")
+		log.Println("use static dir: " + staticDir)
+		fs := http.FileServer(staticDir)
 		uiHandler := http.StripPrefix("/ui", fs)
 		r.PathPrefix("/ui").Handler(uiHandler).Methods(http.MethodGet)
 		r.Handle("/", http.RedirectHandler("/ui/", http.StatusMovedPermanently)).Methods(http.MethodGet)
