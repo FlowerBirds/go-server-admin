@@ -38,6 +38,8 @@ func (service *GetServerService) getServerInfo() {
 		log.Println("Try to get server info.")
 	}
 	getServerMessage := mess.NewGetServerMessage()
+	// 添加客户端的版本号
+	getServerMessage.Version = service.Config.Version
 	// getServerMessage.ServerIp = util.GetIp()
 	sendAllEvent := event.NewSendAllEvent()
 	sendAllEvent.MessageOri = getServerMessage

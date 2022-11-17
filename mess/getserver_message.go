@@ -3,11 +3,13 @@ package mess
 import (
 	"errors"
 	"github.com/FlowerBirds/go-server-admin/base"
+	"strings"
 )
 
 type GetServerMessage struct {
 	*base.Message
 	ServerIp string
+	Version  string
 }
 
 func NewGetServerMessage() *GetServerMessage {
@@ -26,10 +28,22 @@ func (m *GetServerMessage) Parse(mess string) (string, error) {
 	if len(str) <= 1 {
 		return "", errors.New("not find server ip")
 	}
-	m.ServerIp = str
+	if strings.Index(str, ":") > -1 {
+		arr := strings.Split(str, ":")
+		if len(arr) == 2 {
+			m.ServerIp = arr[0]
+			m.Version = arr[1]
+		}
+	} else {
+		m.ServerIp = str
+	}
 	return "", nil
 }
 
 func (m *GetServerMessage) Build() string {
-	return m.Message.Build() + m.ServerIp
+	extInfo := ""
+	if len(m.Version) > 0 {
+		extInfo = ":" + m.Version
+	}
+	return m.Message.Build() + m.ServerIp + extInfo
 }
