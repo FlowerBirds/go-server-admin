@@ -4,7 +4,7 @@ Description=Server Admin daemon
 [Service]
 Type=simple
 EnvironmentFile=/var/lib/server-admin/server.properties
-ExecStart=/var/lib/server-admin/server-admin -config.file=/var/lib/server-admin/server.properties
+ExecStart=/var/lib/server-admin/server-admin -config.file=/var/lib/server-admin/
 ExecReload=/bin/kill -HUP $MAINPID
 KillMode=process
 Restart=on-failure
