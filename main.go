@@ -23,6 +23,7 @@ var (
 	httpPort   = config.DEFAULT_HTTP_PORT
 	configFile = ""
 	devMode    = false
+	workDir    = "."
 )
 
 func initCommandLine() {
@@ -49,27 +50,33 @@ func initConfigFile() {
 		log.Println(fmt.Errorf("Fatal error config file: %w \n", err))
 		return
 	}
-	log.Println("read from config file: " + viper.Get("http.port").(string))
+	log.Println("read http.port from config file: " + viper.Get("http.port").(string))
 	port := viper.Get("http.port")
 	if port != nil {
 		p, err := strconv.Atoi(port.(string))
-		if err != nil {
+		if err == nil {
 			httpPort = p
 		}
 	}
 	configDebug := viper.Get("debug")
-	log.Println("read from config file: " + viper.Get("debug").(string))
+	log.Println("read debug from config file: " + viper.Get("debug").(string))
 	if configDebug != nil {
 		b, err := strconv.ParseBool(configDebug.(string))
-		if err != nil {
+		if err == nil {
 			debug = b
 		}
 	}
 	if !devMode {
 		confDataDir := viper.Get("data.dir")
-		log.Println("read from config file: " + viper.Get("data.dir").(string))
-		if confDataDir != nil {
-			dataDir = confDataDir.(string)
+		log.Println("read data.dir from config file: " + viper.Get("data.dir").(string))
+		dataDir = confDataDir.(string)
+	}
+	server := viper.Get("udp.server")
+	log.Println("read udp.server from config file: " + viper.Get("udp.server").(string))
+	if server != nil {
+		s, err := strconv.ParseBool(server.(string))
+		if err == nil {
+			udpServer = s
 		}
 	}
 
@@ -92,14 +99,21 @@ func main() {
 		client.Start()
 		return
 	}
+	dir, err := util.GetCurrentPath()
+	if err == nil && !devMode {
+		workDir = dir
+		log.Println("current work dir: " + dir)
+	}
 	// 只有在服务模式生效，client模式下不生效
 	initConfigFile()
+	util.UpdateDebug(debug)
 	serverConfig := &config.UdpConfig{
 		Port:     config.DEFAULT_UDP_PORT,
 		IsServer: udpServer,
 		Servers:  make(map[string]int64),
 		DataDir:  dataDir,
 		HttpPort: httpPort,
+		WorkDir:  workDir,
 	}
 	server := service.NewUdpServer(serverConfig)
 	server.Start()

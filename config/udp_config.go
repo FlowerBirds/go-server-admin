@@ -21,6 +21,7 @@ type UdpConfig struct {
 	Clients  map[string]base.MachineInfo
 	DataDir  string
 	HttpPort int
+	WorkDir  string
 }
 
 func (config *UdpConfig) UpdateServer(ip string) {
