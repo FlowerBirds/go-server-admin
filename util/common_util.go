@@ -9,6 +9,7 @@ import (
 	"os/exec"
 	"path/filepath"
 	"reflect"
+	"strconv"
 	"strings"
 	"time"
 )
@@ -60,4 +61,25 @@ func GetCurrentPath() (string, error) {
 		return "", errors.New(`error: Can't find "/" or "\".`)
 	}
 	return string(path[0 : i+1]), nil
+}
+
+func CompareVersion(selfVersion string, serverVersion string) int {
+	if len(selfVersion) == 0 || len(selfVersion) == 0 {
+		return 0
+	}
+	v1 := strings.Split(selfVersion, ".")
+	v2 := strings.Split(selfVersion, ".")
+	if len(v1) != 3 || len(v2) != 3 {
+		return 0
+	}
+	// 对三位版本号进行校验，逐一对比
+	for i := 0; i < 3; i++ {
+		n1, _ := strconv.Atoi(v1[i])
+		n2, _ := strconv.Atoi(v2[i])
+		if n1 != n2 {
+			return n1 - n2
+		}
+	}
+
+	return 0
 }
