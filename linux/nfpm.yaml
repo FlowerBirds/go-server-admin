@@ -21,5 +21,11 @@ contents:
   - src: ./linux/server-admin.service
     dst: /usr/lib/systemd/user/server-admin.service
 
-  - src: ./release-standalone/*
-    dst: /usr/lib/server-admin
+  - src: ./static/*
+    dst: /usr/lib/server-admin/static/
+
+  - src: ./build/*
+    dst: /usr/lib/server-admin/
+
+  - src: ./linux/*
+    dst: /usr/lib/server-admin/
