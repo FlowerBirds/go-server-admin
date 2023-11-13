@@ -27,8 +27,16 @@ contents:
   - src: ./build/*
     dst: /usr/lib/server-admin/
 
-  - src: ./linux/*
-    dst: /usr/lib/server-admin/
+  - src: ./linux/server.properties
+    dst: /usr/lib/server-admin/server.properties
+    
+  - src: ./linux/bash-preexec.sh
+    dst: /usr/lib/server-admin/bash-preexec.sh
     
   - src: ./linux/bash-record.sh 
     dst: /etc/profile.d/bash-record.sh 
+
+overrides:
+  rpm:
+    postintall: ./linux/postinstall.sh
+    postremove: ./linux/postremove.sh
