@@ -29,7 +29,7 @@ jobs:
           curl -sSfL https://github.com/a8m/envsubst/releases/download/v1.1.0/envsubst-`uname -s`-`uname -m` -o envsubst
           chmod +x envsubst
           mv envsubst ~/.local/bin
-          echo "$HOME/.local/bin" >> $GITHUB_PAT
+          echo "$HOME/.local/bin" >> $GITHUB_PATH
 
       - run: mkdir release-packages
       
