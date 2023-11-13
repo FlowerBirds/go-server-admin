@@ -35,12 +35,15 @@ contents:
     dst: /usr/lib/server-admin/bash-preexec.sh
     file_info:
       mode: 0755
-      
-    
+  
   - src: ./linux/bash-record.sh 
     dst: /etc/profile.d/bash-record.sh 
+    file_info:
+      mode: 0755
 
 overrides:
   rpm:
+    preintall: ./linux/preintall.sh
     postintall: ./linux/postinstall.sh
+    preremove: ./linux/preremove.sh
     postremove: ./linux/postremove.sh
