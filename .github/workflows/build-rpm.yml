@@ -30,4 +30,36 @@ jobs:
           chmod +x envsubst
           mv envsubst ~/.local/bin
           echo "$HOME/.local/bin" >> $GITHUB_PAT
+
+      - run: mkdir release-packages
+      
+      - name: build amd64
+        env:
+          VERSION: ${{ vars.VERSION }}
+          BINARY: ${{ vars.BINARY }}
+          GO111MODULE: on
+        run: |
+          GOOS=linux GOARCH=amd64 CGO_ENABLED=1 CGO_LDFLAGS="-static" go build -ldflags "-X main.version=${VERSION}" -o build/${BINARY}
+          
+      - name: package amd64
+        run: |
+          nfpm pkg -f ./linux/nfpm.yaml --target "release-packages/${BINARY}-${VERSION}-amd64.rpm"
+
+      - name: build arm64
+        env:
+          VERSION: ${{ vars.VERSION }}
+          BINARY: ${{ vars.BINARY }}
+          GO111MODULE: on
+        run: |
+          GOOS=linux GOARCH=arm64 CGO_ENABLED=1 CGO_LDFLAGS="-static" go build -ldflags "-X main.version=${VERSION}" -o build/${BINARY}
+      
+      - name: package arm64
+        run: |
+          nfpm pkg -f ./linux/nfpm.yaml --target "release-packages/${BINARY}-${VERSION}-amd64.rpm"
+
+      - uses: softprops/action-gh-release@v1
+        with:
+          draft: true
+          discussion_category_name: "📣 Announcements"
+          files: ./release-packages/*
       
