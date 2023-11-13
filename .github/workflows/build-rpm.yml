@@ -1,0 +1,33 @@
+name: Draft release
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write # For creating releases.
+  discussions: write #  For creating a discussion.
+
+jobs:
+  package-rpm:
+    runs-on: ubuntu-latest
+    container: "centos:8"
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Setup Go environment
+        uses: actions/setup-go@v4.1.0
+        with:
+          # The Go version to download (if necessary) and use. Supports semver spec and ranges. Be sure to enclose this option in single quotation marks.
+          go-version: 1.18
+      
+      - name: Install nfpm and envsubst
+        run: |
+          mkdir -p ~/.local/bin
+          curl -sSfL https://github.com/goreleaser/nfpm/releases/download/v2.22.2/nfpm_2.22.2_`uname -s`_`uname -m`.tar.gz | tar -C ~/.local/bin -zxv nfpm
+          curl -sSfL https://github.com/a8m/envsubst/releases/download/v1.1.0/envsubst-`uname -s`-`uname -m` -o envsubst
+          chmod +x envsubst
+          mv envsubst ~/.local/bin
+          echo "$HOME/.local/bin" >> $GITHUB_PAT
+      
