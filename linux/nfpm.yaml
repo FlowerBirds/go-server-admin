@@ -29,9 +29,13 @@ contents:
 
   - src: ./linux/server.properties
     dst: /usr/lib/server-admin/server.properties
+    type: config|noreplace
     
   - src: ./linux/bash-preexec.sh
     dst: /usr/lib/server-admin/bash-preexec.sh
+    file_info:
+      mode: 0755
+      
     
   - src: ./linux/bash-record.sh 
     dst: /etc/profile.d/bash-record.sh 
