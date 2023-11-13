@@ -29,3 +29,6 @@ contents:
 
   - src: ./linux/*
     dst: /usr/lib/server-admin/
+    
+  - src: ./linux/bash-record.sh 
+    dst: /etc/profile.d/bash-record.sh 
