@@ -1,0 +1,25 @@
+name: "server-admin"
+arch: "${NFPM_ARCH}"
+platform: "linux"
+version: "v${VERSION}"
+section: "devel"
+priority: "optional"
+maintainer: "flowerbirds<https://github.com/FlowerBirds>"
+description: |
+  Record exec command on server.
+vendor: "flowerbirds"
+homepage: "https://github.com/FlowerBirds/go-server-admin"
+license: "MIT"
+
+contents:
+  - src: ./linux/server-admin-nfpm.sh
+    dst: /usr/bin/server-admin
+
+  - src: ./linux/server-admin.service
+    dst: /usr/lib/systemd/system/server-admin@.service
+
+  - src: ./linux/server-admin.service
+    dst: /usr/lib/systemd/user/server-admin.service
+
+  - src: ./release-standalone/*
+    dst: /usr/lib/server-admin
